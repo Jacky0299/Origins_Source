@@ -39,7 +39,6 @@ const SettingsScreen = () => {
         style={styles.picker}>
         <Picker.Item label="1 minute" value="1" />
         <Picker.Item label="2 minutes" value="2" />
-        {/* Add more options as needed */}
       </Picker>
     </View>
   );

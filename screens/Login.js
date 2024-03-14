@@ -1,4 +1,4 @@
-import { View, Text, Image , Pressable, TextInput, TouchableOpacity } from 'react-native'
+import { Linking, View, Text, Image , Pressable, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from "react-native-safe-area-context";
 import COLORS from '../constants/colors';
@@ -37,7 +37,7 @@ const Login = ({ navigation }) => {
                         fontSize: 16,
                         fontWeight: 400,
                         marginVertical: 8
-                    }}>Email address</Text>
+                    }}>Username</Text>
 
                     <View style={{
                         width: "100%",
@@ -50,7 +50,7 @@ const Login = ({ navigation }) => {
                         paddingLeft: 22
                     }}>
                         <TextInput
-                            placeholder='Enter your email address'
+                            placeholder='Enter your username'
                             placeholderTextColor={COLORS.black}
                             keyboardType='email-address'
                             style={{
@@ -140,7 +140,7 @@ const Login = ({ navigation }) => {
                 }}>
                     <Text style={{ fontSize: 16, color: COLORS.black }}>Don't have an account ? </Text>
                     <Pressable
-                        onPress={() => navigation.navigate("Signup")}
+                        onPress={() => Linking.openURL('https://origins-source.com/account-page/signup.php')}
                     >
                         <Text style={{
                             fontSize: 16,

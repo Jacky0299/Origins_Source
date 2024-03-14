@@ -64,8 +64,10 @@ export default function HomeScreen() {
         setTimerDuration(parseInt(durationValue) * 60000); // Convert minutes to milliseconds
       }
       console.log(durationValue);
-      await Location.requestPermissionsAsync();
-
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+      }
       Location.watchPositionAsync(
         { accuracy: Location.Accuracy.High, distanceInterval: 1 },
         (newLocation) => {

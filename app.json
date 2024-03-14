@@ -8,7 +8,18 @@
       "expo-router"
     ],
     "name": "origins-source-mobile",
-    "slug": "origins-source-mobile"
+    "slug": "origins-source-mobile",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "6d8a566b-70ab-4587-9526-17e9f7358221"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "origins-source"
+    }
   },
   "splash": {
     "image": "./assets/facebook.png",

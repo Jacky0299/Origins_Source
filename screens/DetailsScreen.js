@@ -5,7 +5,7 @@ export default function DetailsScreen({ navigation }) {
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Text
-                onPress={() => Alert.alert("Alert", "You've stayed in the same position for 1 minute.")}
+                onPress={() => Alert.alert("Welcome To Origins Source")}
                 style={{ fontSize: 26, fontWeight: 'bold' }}>Details Screen</Text>
         </View>
     );

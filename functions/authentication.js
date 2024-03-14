@@ -24,7 +24,7 @@ const handleLogin = async (email, password, navigation) => {
                     routes: [{ name: 'Home' }],
                 });
             } else {
-                console.log('Login error');
+                alert("Wrong Username Or Password");
             }
         } else {
             alert("An error occurred. Please try again later.");
