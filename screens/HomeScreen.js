@@ -9,7 +9,7 @@ export default function HomeScreen() {
   const [path, setPath] = useState([]);
   const timerRef = useRef(null);
   const lastPositionRef = useRef(null);
-  
+  const mapRef = useRef(null);
   const [timerDuration, setTimerDuration] = useState(60000);
 
   const checkPositionChange = (newLocation) => {
@@ -30,7 +30,7 @@ export default function HomeScreen() {
       lastPosition.longitude
     );
 
-    // Check if distance moved is significant, e.g., more than 10 meters
+    // Check if distance moved is significant, more than 10 meters
     if (distance > 10) {
       lastPositionRef.current = { latitude, longitude };
       setPath(currentPath => [...currentPath, { latitude, longitude }]);
@@ -54,7 +54,7 @@ export default function HomeScreen() {
               Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    return R * c; // Distance in meters
+    return R * c;
   }
 
   useEffect(() => {
@@ -84,9 +84,15 @@ export default function HomeScreen() {
           setLocation({
             latitude: newLocation.coords.latitude,
             longitude: newLocation.coords.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+            latitudeDelta: 0.0092,
+            longitudeDelta: 0.0061,
           });
+          mapRef.current?.animateToRegion({
+            latitude: newLocation.coords.latitude,
+            longitude: newLocation.coords.longitude,
+            latitudeDelta: 0.0092,
+            longitudeDelta: 0.0061,
+          }, 1000);
         }
       );
     }
@@ -112,11 +118,10 @@ export default function HomeScreen() {
     <View style={{ flex: 1 }}>
       {location && (
         <MapView
+          ref={mapRef}
           style={{ flex: 1 }}
-          initialRegion={location}
           showsUserLocation={true}
         >
-          <Marker coordinate={location} />
           <Polyline
             coordinates={path}
             strokeColor="#000" // black

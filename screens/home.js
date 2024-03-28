@@ -18,33 +18,37 @@ const Tab = createBottomTabNavigator();
 
 function Home() {
   return (
-    <NavigationContainer independent={true}>
-      <Tab.Navigator
-        initialRouteName={homeName}
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            if (route.name === homeName) {
-              iconName = focused ? 'home' : 'home-outline';
-            } else if (route.name === detailsName) {
-              iconName = focused ? 'list' : 'list-outline';
-            } else if (route.name === settingsName) {
-              iconName = focused ? 'settings' : 'settings-outline';
-            }
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: 'tomato',
-          tabBarInactiveTintColor: 'grey',
-          tabBarLabelStyle: { paddingBottom: 10, fontSize: 10 },
-          tabBarStyle: { padding: 10, height: 70 }
-        })}>
+      <NavigationContainer independent={true}>
+        <Tab.Navigator
+          initialRouteName={homeName}
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName;
+              if (route.name === homeName) {
+                iconName = focused ? 'home' : 'home-outline';
+              } else if (route.name === detailsName) {
+                iconName = focused ? 'list' : 'list-outline';
+              } else if (route.name === settingsName) {
+                iconName = focused ? 'settings' : 'settings-outline';
+              }
+              return <Ionicons name={iconName} size={size} color={color} />;
+            },
+            tabBarActiveTintColor: 'tomato',
+            tabBarInactiveTintColor: 'grey',
+            tabBarLabelStyle: { fontSize: 10},
+            tabBarStyle: { paddingBottom: 0, padding: 10, height: 50 },
+            headerStyle: {
+              height: 0
+            },
+            headerShown: 'false',
+          })}>
 
-        <Tab.Screen name={homeName} component={HomeScreen} />
-        <Tab.Screen name={detailsName} component={DetailsScreen} />
-        <Tab.Screen name={settingsName} component={SettingsScreen} />
+          <Tab.Screen name={homeName} component={HomeScreen} />
+          <Tab.Screen name={detailsName} component={DetailsScreen} />
+          <Tab.Screen name={settingsName} component={SettingsScreen} />
 
-      </Tab.Navigator>
-    </NavigationContainer>
+        </Tab.Navigator>
+      </NavigationContainer>
   );
 }
 
