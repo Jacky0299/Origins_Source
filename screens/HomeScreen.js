@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, Alert , StyleSheet, Text, Button, Modal, TouchableOpacity} from 'react-native';
+import { View, Alert , StyleSheet, Text, Button, Modal, TouchableOpacity, TextInput, Keyboard} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import MapView, { Marker, Polyline, Circle } from 'react-native-maps';
 import * as Location from 'expo-location';
@@ -24,10 +24,19 @@ export default function HomeScreen() {
   }, [centerPoint]);
 
   const [radius, setRadius] = useState(100);
+  const [radiusInput, setRadiusInput] = useState('100');
   const radiusRef = useRef(radius);
   useEffect(() => {
     radiusRef.current = radius;
   }, [radius]);
+
+  const handleInputRadiusChange = text => {
+    setRadiusInput(text);
+    const num = parseInt(text, 10); 
+    if (!isNaN(num) && num >= 0) {
+      setRadius(num);
+    }
+  };
 
   const handleMapLongPress = (event) => {
     const { latitude, longitude } = event.nativeEvent.coordinate;
@@ -108,7 +117,7 @@ export default function HomeScreen() {
       if (durationValue !== null) {
         setTimerDuration(parseInt(durationValue) * 60000); // Convert minutes to milliseconds
       }
-      console.log(durationValue);
+      //console.log(durationValue);
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         console.log('Permission to access location was denied');
@@ -177,7 +186,7 @@ export default function HomeScreen() {
           {/* Optionally display the center point */}
           {centerPoint && (
       <>
-        <Marker coordinate={centerPoint} title="Center Point" />
+        <Marker coordinate={centerPoint} title="Reference Location" />
         <Circle
           center={centerPoint}
           radius={radius}
@@ -205,10 +214,19 @@ export default function HomeScreen() {
           <View style={styles.modalView}>
             <Text>Radius: {radius} meters</Text>
             <Text style={{ fontSize: 12 }}>Hold onto the screen to get the radius you want</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={handleInputRadiusChange}
+              value={radiusInput}
+              placeholder="Enter custom radius"
+              keyboardType="numeric"
+              returnKeyType="done"
+              onSubmitEditing={() => Keyboard.dismiss()}
+            />
             <Button title="Increase Radius" onPress={() => setRadius(radius + 100)} />
             <Button title="Decrease Radius" onPress={() => radius >= 100 ? setRadius(radius - 50) : null} />
-            <Button title="Set Center Point" onPress={handleSetCenterPoint} />
-            <Button title="Clear" onPress={() => setRadius(null)} />
+            <Button title="Set Reference Location" onPress={handleSetCenterPoint} />
+            <Button title="Clear" onPress={() => setCenterPoint(null)} />
             <Button title="Close" onPress={() => setModalVisible(!modalVisible)} />
           </View>
         </View>
@@ -253,6 +271,13 @@ const styles = StyleSheet.create({
       top: 0,
       right: 0,
       padding: 10,
+  },
+  input: {
+    height: 40,
+    marginVertical: 12,
+    borderWidth: 1,
+    padding: 10,
+    width: 200
   },
 });
 

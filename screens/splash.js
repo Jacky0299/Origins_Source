@@ -8,7 +8,7 @@ export default function Splash({setIsLoading}) {
   useEffect(() => {
     const timer = setTimeout(() => {
         setIsLoading(false); // Use the function to update the state
-      }, 1600); // Adjust the timeout as needed
+      }, 1600);
   
     return () => clearTimeout(timer);
   }, [setIsLoading]);

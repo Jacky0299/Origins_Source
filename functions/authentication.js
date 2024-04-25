@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const handleLogin = async (email, password, navigation) => {
     try {
         const response = await fetch('https://origins-source.com/account-page/mobile_signin.php', {
@@ -17,6 +18,7 @@ const handleLogin = async (email, password, navigation) => {
 
         if (response.ok) {
             if (data.status === "success") {
+                await AsyncStorage.setItem('@email', data.email);
                 console.log('Login successful');
                 // navigation.replace('Home');
                 navigation.reset({
